@@ -37,25 +37,25 @@ const useCountUp = props => {
   const reset = () => {
     const { onReset } = _props;
     getCountUp().reset();
-    onReset({ pauseResume, start: restart, update });
+    onReset({ pauseResume, start: restart, updateCount });
   };
 
   const restart = () => {
     const { onStart, onEnd } = _props;
     getCountUp().reset();
     getCountUp().start(() => {
-      onEnd({ pauseResume, reset, start: restart, update });
+      onEnd({ pauseResume, reset, start: restart, updateCount });
     });
-    onStart({ pauseResume, reset, update });
+    onStart({ pauseResume, reset, updateCount });
   };
 
   const pauseResume = () => {
     const { onPauseResume } = _props;
     getCountUp().pauseResume();
-    onPauseResume({ reset, start: restart, update });
+    onPauseResume({ reset, start: restart, updateCount });
   };
 
-  const update = (newEnd, newDur) => {
+  const updateCount = (newEnd, newDur) => {
     const { onUpdate } = _props;
     const cup = getCountUp();
     cup.duration = newDur;
@@ -67,17 +67,17 @@ const useCountUp = props => {
     const { delay, onStart, onEnd, startOnMount } = _props;
     if (startOnMount) {
       const timeout = setTimeout(() => {
-        onStart({ pauseResume, reset, update });
+        onStart({ pauseResume, reset, updateCount });
         getCountUp().start(() => {
           clearTimeout(timeout);
-          onEnd({ pauseResume, reset, start: restart, update });
+          onEnd({ pauseResume, reset, start: restart, updateCount });
         });
       }, delay * 1000);
     }
     return reset;
   }, []);
 
-  return { countUp: count, start: restart, pauseResume, reset, update };
+  return { countUp: count, start: restart, pauseResume, reset, updateCount };
 };
 
 export default useCountUp;

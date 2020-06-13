@@ -55,9 +55,11 @@ const useCountUp = props => {
     onPauseResume({ reset, start: restart, update });
   };
 
-  const update = newEnd => {
+  const update = (newEnd, newDur) => {
     const { onUpdate } = _props;
-    getCountUp().update(newEnd);
+    const cup = getCountUp();
+    cup.duration = newDur;
+    cup.update(newEnd);
     onUpdate({ pauseResume, reset, start: restart });
   };
 
